@@ -11,6 +11,8 @@ to expose localhost to public internet and use the ngrok url as external host.
 The server utilize `node:crypto` library to create and verify signature.
 The `sha256` algorithm is used.
 
+To update signature secret use the `SECRET_TOKEN` in the `.env`.
+
 ```ts
 import { createHmac, BinaryToTextEncoding } from 'node:crypto';
 
@@ -47,6 +49,8 @@ $ npm install
 ```
 
 ## Running the app
+
+To update signature secret use the `SECRET_TOKEN` in the `.env`.
 
 ```bash
 # development
