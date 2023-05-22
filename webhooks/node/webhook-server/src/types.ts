@@ -5,7 +5,7 @@
 export type IsoDate = string;
 
 /**
- * ExtractedPriceChanged event
+ * Ping event
  */
 export interface Ping {
   /**
