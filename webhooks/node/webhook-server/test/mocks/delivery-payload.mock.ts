@@ -2,7 +2,7 @@ import { DeliveryPayload } from '../../src/types';
 
 export const deliveryPayloadMock: DeliveryPayload = {
   subscriptionId: '64665df7bbb651628defabab',
-  timestamp: 1684493582702,
+  timestamp: Date.now(),
   eventType: 'Ping',
   eventData: [
     {
