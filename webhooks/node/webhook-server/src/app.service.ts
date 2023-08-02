@@ -26,7 +26,6 @@ export class AppService {
 
   /**
    * Verify event signature and payload timestamp
-   * @param param0
    */
   processEvent({ signature, payload }: EventData) {
     this.verifySignature({ signature, payload });

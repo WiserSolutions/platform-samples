@@ -8,7 +8,7 @@ To check the `/webhook (POST)` implementation see `src/app.controller.ts`
 To test the server with real webhook request you can use [ngrok](https://ngrok.com)
 to expose localhost to public internet and use the ngrok url as external host.
 
-The server utilize `node:crypto` library to create and verify HMAC signature.
+The server utilizes `node:crypto` library to create and verify HMAC signature.
 The `sha256` algorithm is used.
 
 
