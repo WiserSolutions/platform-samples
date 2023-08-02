@@ -1,6 +1,6 @@
 ## Description
 
-This is simple Webhook Server implementation to receive webhook payload and verify the signature.
+This is simple Webhook Server implementation to receive webhook payload and verify the signature using Hash-based Message Authentication Code (HMAC).
 The server listen to `POST` requests at `/webhook` endpoint.
 
 To check the `/webhook (POST)` implementation see `src/app.controller.ts`
@@ -8,8 +8,12 @@ To check the `/webhook (POST)` implementation see `src/app.controller.ts`
 To test the server with real webhook request you can use [ngrok](https://ngrok.com)
 to expose localhost to public internet and use the ngrok url as external host.
 
-The server utilize `node:crypto` library to create and verify signature.
+The server utilizes `node:crypto` library to create and verify HMAC signature.
 The `sha256` algorithm is used.
+
+
+![Request Signature Validation. (Source https://webhooks.fyi/security/hmac)](./hmac_flow.png)
+
 
 To update signature secret use the `SECRET_TOKEN` in the `.env`.
 
@@ -84,7 +88,7 @@ Forwarding                    https://09f5-2601-640-8000-d4a0-bd9d-56bf-9af3-790
 ```
 where `3000` is you application port.
 
-4. Use the generated endpoint `https://09f5-2601-640-8000-d4a0-bd9d-56bf-9af3-790f.ngrok-free.app` to create/update webhook Endpoint URL.
+4. Use the generated endpoint `https://09f5-2601-640-8000-d4a0-bd9d-56bf-9af3-790f.ngrok-free.app` +  `/webhook` to create/update webhook Endpoint URL.
 
 
 ## Test

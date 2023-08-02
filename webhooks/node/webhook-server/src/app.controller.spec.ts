@@ -25,16 +25,16 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should call verifySignature with headerSignature and deliveryPayload', () => {
-      const headerSignature = 'headerSignatureHash';
-      const verifySignatureSpy = jest
-        .spyOn(appService, 'verifySignature')
+    it('should call processEvent with headerSignature and deliveryPayload', () => {
+      const signature = 'headerSignatureHash';
+      const processEventSpy = jest
+        .spyOn(appService, 'processEvent')
         .mockReturnValue();
-      appController.processEvent(headerSignature, deliveryPayloadMock);
-      expect(verifySignatureSpy).toBeCalledWith(
-        headerSignature,
-        deliveryPayloadMock,
-      );
+      appController.processEvent(signature, deliveryPayloadMock);
+      expect(processEventSpy).toBeCalledWith({
+        signature,
+        payload: deliveryPayloadMock,
+      });
     });
   });
 });

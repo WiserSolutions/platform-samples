@@ -3,9 +3,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
 import { deliveryPayloadMock } from '../test/mocks/delivery-payload.mock';
+import { MAX_TIME_TO_DELIVER_MS } from './constants';
 import configuration from './config/configuration';
 
-describe('AppController', () => {
+describe('AppService', () => {
   let appService: AppService;
 
   beforeEach(async () => {
@@ -21,20 +22,36 @@ describe('AppController', () => {
     appService = app.get<AppService>(AppService);
   });
 
-  describe('root', () => {
+  describe('event processing', () => {
     it('should throw exception when headerSignature is missing', () => {
       expect(() =>
-        appService.verifySignature(null, deliveryPayloadMock),
+        appService.verifySignature({
+          signature: null,
+          payload: deliveryPayloadMock,
+        }),
       ).toThrowError(BadRequestException);
     });
+
     it('should throw exception when headerSignature does not match payload signature', () => {
       const modifiedDeliveryPayload = {
         ...deliveryPayloadMock,
-        timestamp: 1684493582100,
+        timestamp: Date.now() - 3000,
       };
-      const headerSignature = appService.signPayload(modifiedDeliveryPayload);
+      const signature = appService.signPayload(modifiedDeliveryPayload);
+
       expect(() =>
-        appService.verifySignature(headerSignature, deliveryPayloadMock),
+        appService.verifySignature({ signature, payload: deliveryPayloadMock }),
+      ).toThrowError(BadRequestException);
+    });
+
+    it('should throw exception when timestamp is older than MAX_TIME_TO_DELIVER_MS', () => {
+      const modifiedDeliveryPayload = {
+        ...deliveryPayloadMock,
+        timestamp: Date.now() - (MAX_TIME_TO_DELIVER_MS + 1),
+      };
+
+      expect(() =>
+        appService.verifyTimestamp(modifiedDeliveryPayload),
       ).toThrowError(BadRequestException);
     });
   });

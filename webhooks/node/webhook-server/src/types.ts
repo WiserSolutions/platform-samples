@@ -20,11 +20,6 @@ export interface Ping {
 }
 
 /**
- * Event data
- */
-export type EventData = Ping;
-
-/**
  * Webhook delivery payload
  */
 export type DeliveryPayload = {
@@ -45,4 +40,18 @@ export type DeliveryPayload = {
    * Event data
    */
   eventData: Ping[];
+};
+
+/**
+ * Webhook Event to process
+ */
+export type EventData = {
+  /**
+   * Payload signature (HMAC hex digest of the request body, generated using the SHA-256 hash)
+   */
+  signature: string;
+  /**
+   * Event DeliveryPayload
+   */
+  payload: DeliveryPayload;
 };
